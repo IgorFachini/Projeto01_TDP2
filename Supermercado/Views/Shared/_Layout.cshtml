@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/jquery.bootgrid.css" rel="stylesheet" />
 
     <script type="text/javascript">
         var appInsights=window.appInsights||function(config){
@@ -34,6 +35,11 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Livros", "Index", "Livros")</li>
+                    <li>@Html.ActionLink("Generos", "Index", "Generos")</li>
+                    <li>@Html.ActionLink("Games", "Index", "Games")</li>
+                    
+                
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
