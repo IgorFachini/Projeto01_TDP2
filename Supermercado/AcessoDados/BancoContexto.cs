@@ -11,6 +11,7 @@ namespace Supermercado.AcessoDados {
         public DbSet<Genero> Generos { get; set; }
         public DbSet<Livro> Livros { get; set; }
         public DbSet<Game> Games { get; set; }
+        public DbSet<Filme> Filmes { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Properties<string>().Configure(c => c.HasMaxLength(100));
