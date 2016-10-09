@@ -15,7 +15,6 @@ namespace Supermercado.Controllers
     {
         private BancoContexto db = new BancoContexto();
 
-        // GET: Filmes
         public ActionResult Index()
         {
             var filmes = db.Filmes.Include(f => f.Genero);
