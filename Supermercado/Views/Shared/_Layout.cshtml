@@ -14,7 +14,7 @@
         }({
             instrumentationKey:"7e3fae49-1793-4951-b381-058567c2f570"
         });
-        
+
         window.appInsights=appInsights;
         appInsights.trackPageView();
     </script>
@@ -38,14 +38,14 @@
                     <li>@Html.ActionLink("Livros", "Index", "Livros")</li>
                     <li>@Html.ActionLink("Generos", "Index", "Generos")</li>
                     <li>@Html.ActionLink("Games", "Index", "Games")</li>
-                    
-                
+
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div>
         @RenderBody()
         <hr />
         <footer>
