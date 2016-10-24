@@ -51,21 +51,20 @@ namespace Supermercado.Controllers
             , JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Livros/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
+        [HttpGet]
+        public ActionResult Details(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Livro livro = db.Livros.Find(id);
-            if (livro == null)
-            {
+
+            Livro livro = db.Livros.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
+
+            if (livro == null) {
                 return HttpNotFound();
             }
+
             return PartialView(livro);
         }
-
         // GET: Livros/Create
         public ActionResult Create()
         {
@@ -73,22 +72,19 @@ namespace Supermercado.Controllers
             return PartialView();
         }
 
-        // POST: Livros/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titulo,Autor,AnoEdicao,Valor,GeneroId")] Livro livro)
-        {
-            if (ModelState.IsValid)
-            {
+        public JsonResult Create(Livro livro) {
+            if (ModelState.IsValid) {
                 db.Livros.Add(livro);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(new { resultado = true, message = "Livro cadastrado com sucesso" });
+            } else {
+                IEnumerable<ModelError> erros = ModelState.Values.SelectMany(item => item.Errors);
+
+                return Json(new { resultado = false, message = erros });
             }
 
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", livro.GeneroId);
-            return View(livro);
         }
 
         // GET: Livros/Edit/5
@@ -112,16 +108,17 @@ namespace Supermercado.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titulo,Autor,AnoEdicao,Valor,GeneroId")] Livro livro)
-        {
-            if (ModelState.IsValid)
-            {
+        public JsonResult Edit(Livro livro) {
+            if (ModelState.IsValid) {
                 db.Entry(livro).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return Json(new { resultado = true, message = "Livro editado com sucesso" });
+            } else {
+                IEnumerable<ModelError> erros = ModelState.Values.SelectMany(item => item.Errors);
+
+                return Json(new { resultado = false, message = erros });
             }
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", livro.GeneroId);
-            return View(livro);
         }
 
         // GET: Livros/Delete/5
@@ -142,12 +139,20 @@ namespace Supermercado.Controllers
         // POST: Livros/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Livro livro = db.Livros.Find(id);
-            db.Livros.Remove(livro);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+        public JsonResult DeleteConfirmed(int id) {
+            try {
+                Livro livro = db.Livros.Find(id);
+
+                db.Livros.Remove(livro);
+
+                db.SaveChanges();
+
+                return Json(new { resultado = true, message = "Livro excluído com sucesso" });
+            } catch (Exception e) {
+                return Json(new { resultado = false, message = e.Message });
+            }
+
+
         }
 
         protected override void Dispose(bool disposing)
