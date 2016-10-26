@@ -1,119 +1,117 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Supermercado.AcessoDados;
 using Supermercado.Models;
 
 namespace Supermercado.Controllers
 {
-    public class GenerosController : Controller
+    public class TipoController : Controller
     {
         private BancoContexto db = new BancoContexto();
 
-        // GET: Generos
+        // GET: Tipo
         public ActionResult Index()
         {
-            return View(db.Generos.ToList());
+            return View(db.Tipos.ToList());
         }
 
-        // GET: Generos/Details/5
+        // GET: Tipo/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Genero genero = db.Generos.Find(id);
-            if (genero == null)
+            Tipo tipo = db.Tipos.Find(id);
+            if (tipo == null)
             {
                 return HttpNotFound();
             }
-            return View(genero);
+            return View(tipo);
         }
 
-        public PartialViewResult Listar()
-        {
-            return PartialView(db.Generos.ToList());
-        }
-
-
-        // GET: Generos/Create
+        // GET: Tipo/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Generos/Create
+        // POST: Tipo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome")] Genero genero)
+        public ActionResult Create([Bind(Include = "Id,Nome")] Tipo tipo)
         {
             if (ModelState.IsValid)
             {
-                db.Generos.Add(genero);
+                db.Tipos.Add(tipo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(genero);
+            return View(tipo);
         }
 
-        // GET: Generos/Edit/5
+        // GET: Tipo/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Genero genero = db.Generos.Find(id);
-            if (genero == null)
+            Tipo tipo = db.Tipos.Find(id);
+            if (tipo == null)
             {
                 return HttpNotFound();
             }
-            return View(genero);
+            return View(tipo);
         }
 
-        // POST: Generos/Edit/5
+        // POST: Tipo/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome")] Genero genero)
+        public ActionResult Edit([Bind(Include = "Id,Nome")] Tipo tipo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(genero).State = EntityState.Modified;
+                db.Entry(tipo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(genero);
+            return View(tipo);
         }
 
-        // GET: Generos/Delete/5
+        // GET: Tipo/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Genero genero = db.Generos.Find(id);
-            if (genero == null)
+            Tipo tipo = db.Tipos.Find(id);
+            if (tipo == null)
             {
                 return HttpNotFound();
             }
-            return View(genero);
+            return View(tipo);
         }
 
-        // POST: Generos/Delete/5
+        // POST: Tipo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Genero genero = db.Generos.Find(id);
-            db.Generos.Remove(genero);
+            Tipo tipo = db.Tipos.Find(id);
+            db.Tipos.Remove(tipo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

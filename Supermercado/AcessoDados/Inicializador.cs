@@ -5,9 +5,21 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace Supermercado.AcessoDados {
-    public class Inicializador : CreateDatabaseIfNotExists<BancoContexto> {
-        protected override void Seed(BancoContexto contexto) {
+namespace Supermercado.AcessoDados
+{
+    public class Inicializador : CreateDatabaseIfNotExists<BancoContexto>
+    {
+        protected override void Seed(BancoContexto contexto)
+        {
+            List<Tipo> tipos = new List<Tipo>()
+            {
+                new Tipo() {Nome = "Livro" },
+                new Tipo() {Nome = "Game" },
+                new Tipo() {Nome = "Filme" }
+            };
+
+            tipos.ForEach(t => contexto.Tipos.Add(t));
+
             List<Genero> generos = new List<Genero>()
             {
                 new Genero() { Nome = "Administração" },
@@ -27,22 +39,25 @@ namespace Supermercado.AcessoDados {
                             Autor = "Duhigg, Charles",
                             AnoEdicao = 2012,
                             Valor = 40.00m,
-                            Genero = generos.FirstOrDefault(g => g.Nome == "Administração")
+                            Genero = generos.FirstOrDefault(g => g.Nome == "Administração"),
+                            Tipo = tipos.FirstOrDefault(t => t.Nome == "Livro")
                 },
                 new Livro() {
                             Titulo = "Quarto de Guerra - A Oração É Uma Arma Poderosa na Batalha Espiritual",
                             Autor = "Fabry, Chris",
                             AnoEdicao = 2015,
                             Valor = 25.50m,
-                            Genero = generos.FirstOrDefault(g => g.Nome == "Religião")
+                            Genero = generos.FirstOrDefault(g => g.Nome == "Religião"),
+                             Tipo = tipos.FirstOrDefault(t => t.Nome == "Livro")
                 },
                 new Livro() {
                             Titulo = "Cristianismo Puro e Simples",
                             Autor = "Lewis, C. S.",
                             AnoEdicao = 2009,
                             Valor = 36.00m,
-                            Genero = generos.FirstOrDefault(g => g.Nome == "Religião")
-                },   
+                            Genero = generos.FirstOrDefault(g => g.Nome == "Religião"),
+                             Tipo = tipos.FirstOrDefault(t => t.Nome == "Livro")
+                },
             };
 
             livros.ForEach(l => contexto.Livros.Add(l));
@@ -53,7 +68,8 @@ namespace Supermercado.AcessoDados {
                             Plataforma = "PC",
                             AnoLancamento = 2011,
                             Valor = 40.00m,
-                            Genero = generos.FirstOrDefault(g => g.Nome == "RPG")
+                            Genero = generos.FirstOrDefault(g => g.Nome == "RPG"),
+                            Tipo = tipos.FirstOrDefault(t => t.Nome == "Game")
                 }
             };
 
@@ -65,7 +81,8 @@ namespace Supermercado.AcessoDados {
                             Diretor = "Robert Zemeckis",
                             AnoLancamento = 2011,
                             Valor = 30.00m,
-                            Genero = generos.FirstOrDefault(g => g.Nome == "Drama")
+                            Genero = generos.FirstOrDefault(g => g.Nome == "Drama"),
+                            Tipo = tipos.FirstOrDefault(t => t.Nome == "Filme")
                 }
             };
 

@@ -21,6 +21,7 @@ namespace Supermercado.Controllers
         {        
             return View();
         }
+        
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 5) {
             string chave = Request.Form.AllKeys.Where(k => k.StartsWith("sort")).First();
             string ordenacao = Request[chave];
@@ -58,6 +59,7 @@ namespace Supermercado.Controllers
             }
 
             Livro livro = db.Livros.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
+                  livro = db.Livros.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
 
             if (livro == null) {
                 return HttpNotFound();
@@ -69,6 +71,7 @@ namespace Supermercado.Controllers
         public ActionResult Create()
         {
             ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome");
+            ViewBag.TipoId = new SelectList(db.Tipos, "Id", "Nome");
             return PartialView();
         }
 

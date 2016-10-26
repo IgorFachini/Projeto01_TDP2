@@ -9,6 +9,7 @@ using System.Web;
 namespace Supermercado.AcessoDados {
     public class BancoContexto : DbContext{
         public DbSet<Genero> Generos { get; set; }
+        public DbSet<Tipo> Tipos { get; set; }
         public DbSet<Livro> Livros { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Filme> Filmes { get; set; }

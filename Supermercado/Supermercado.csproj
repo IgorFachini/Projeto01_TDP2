@@ -209,42 +209,32 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LivrosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TipoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infra\DadosFiltrados.cs" />
+    <Compile Include="Infra\ParametrosPaginacao.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Filme.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Genero.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Livro.cs" />
+    <Compile Include="Models\ConteudoPorGenero.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Tipo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\css\font-awesome.min.css" />
-    <Content Include="assets\css\ie8.css" />
-    <Content Include="assets\css\ie9.css" />
-    <Content Include="assets\css\images\arrow.svg" />
-    <Content Include="assets\css\images\bars.svg" />
-    <Content Include="assets\css\images\close.svg" />
-    <Content Include="assets\css\main.css" />
-    <Content Include="assets\fonts\fontawesome-webfont.svg" />
-    <Content Include="assets\js\ie\backgroundsize.min.htc" />
-    <Content Include="assets\js\ie\html5shiv.js" />
-    <Content Include="assets\js\ie\respond.min.js" />
-    <Content Include="assets\js\jquery.min.js" />
-    <Content Include="assets\js\jquery.scrollex.min.js" />
-    <Content Include="assets\js\jquery.scrolly.min.js" />
-    <Content Include="assets\js\main.js" />
-    <Content Include="assets\js\skel.min.js" />
-    <Content Include="assets\js\util.js" />
     <Content Include="Content\img\Arkham-Knight-HD-Wallpaper.jpg" />
     <Content Include="Content\img\assassins_creed_3_2012_game-wide.jpg" />
     <Content Include="Content\img\darthVader_withBookPotter.jpeg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\flat-book.png" />
+    <Content Include="Content\img\mini_crud-logo.png" />
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
     <Content Include="Content\toastr.css" />
@@ -267,18 +257,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\fonts\fontawesome-webfont.eot" />
-    <Content Include="assets\fonts\fontawesome-webfont.ttf" />
-    <Content Include="assets\fonts\fontawesome-webfont.woff" />
-    <Content Include="assets\fonts\fontawesome-webfont.woff2" />
-    <Content Include="assets\fonts\FontAwesome.otf" />
-    <Content Include="assets\sass\ie8.scss" />
-    <Content Include="assets\sass\ie9.scss" />
-    <Content Include="assets\sass\libs\_functions.scss" />
-    <Content Include="assets\sass\libs\_mixins.scss" />
-    <Content Include="assets\sass\libs\_skel.scss" />
-    <Content Include="assets\sass\libs\_vars.scss" />
-    <Content Include="assets\sass\main.scss" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -363,6 +341,13 @@
     <Content Include="Views\Filmes\Details.cshtml" />
     <Content Include="Views\Filmes\Edit.cshtml" />
     <Content Include="Views\Filmes\Index.cshtml" />
+    <Content Include="Views\Tipo\Create.cshtml" />
+    <Content Include="Views\Tipo\Delete.cshtml" />
+    <Content Include="Views\Tipo\Details.cshtml" />
+    <Content Include="Views\Tipo\Edit.cshtml" />
+    <Content Include="Views\Tipo\Index.cshtml" />
+    <Content Include="Views\Home\ListarPorGenero.cshtml" />
+    <Content Include="Views\Generos\Listar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
