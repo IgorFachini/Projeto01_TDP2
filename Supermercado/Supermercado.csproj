@@ -228,6 +228,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\img\3D-Books-hd-wallpapers.jpg" />
     <Content Include="Content\img\Arkham-Knight-HD-Wallpaper.jpg" />
     <Content Include="Content\img\assassins_creed_3_2012_game-wide.jpg" />
     <Content Include="Content\img\darthVader_withBookPotter.jpeg" />
