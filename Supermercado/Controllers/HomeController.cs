@@ -3,6 +3,7 @@ using Supermercado.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Threading;
 
 namespace Supermercado.Controllers {
     public class HomeController : Controller {
@@ -11,6 +12,17 @@ namespace Supermercado.Controllers {
 
         public ActionResult Index() {
             return View();
+        }
+
+        public ActionResult Ingles() {
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
+            return View("About");
+
+        }
+
+        public ActionResult Portugues() {
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pt-br");
+            return View("About");
         }
 
         public ActionResult ListarPorGenero(int id)
