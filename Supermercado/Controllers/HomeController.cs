@@ -48,5 +48,12 @@ namespace Supermercado.Controllers {
 
             return PartialView(conteudoPorGenero);
         }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }
