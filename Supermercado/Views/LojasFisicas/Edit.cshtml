@@ -16,6 +16,13 @@
     @Html.HiddenFor(model => model.Id)
 
     <div class="row">
+
+        <div class="form-group col-xs-8">
+            @Html.LabelFor(model => model.CEP)
+            @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "text-danger" })
+        </div>
+
         <div class="form-group col-xs-8">
             @Html.LabelFor(model => model.Estado)
             @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })
@@ -26,12 +33,6 @@
             @Html.LabelFor(model => model.Cidade)
             @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group col-xs-8">
-            @Html.LabelFor(model => model.CEP)
-            @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group col-xs-8">
@@ -55,6 +56,27 @@
     var btnAcao = $("input[type='button']");
     var formulario = $("#formCrud");
 
+</script>
+
+<script src="~/Scripts/jquery-1.10.2.intellisense.js"></script>
+
+<script>
+    $('#CEP').change(function (e) {
+        e.preventDefault();
+        $("#Cidade").val('');
+        $("#Estado").val('');
+
+        var cep = $('#CEP').val().replace("-", "");
+
+        $.getJSON("http://cep.republicavirtual.com.br/web_cep.php?cep=" + cep + "&formato=json", {}, function (data) {
+
+            if (data.resultado_txt = 'sucesso - cep completo') {
+                $("#Cidade").val(data.cidade);
+                $("#Estado").val(data.uf);
+            }
+
+        });
+    });
 </script>
 
 
