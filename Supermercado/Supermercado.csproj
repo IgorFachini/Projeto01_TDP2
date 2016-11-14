@@ -352,20 +352,20 @@
     <Content Include="Views\Livros\Details.cshtml" />
     <Content Include="Views\Livros\Edit.cshtml" />
     <Content Include="Views\Livros\Index.cshtml" />
-    <Content Include="Views\Filmes\Create.cshtml" />
-    <Content Include="Views\Filmes\Delete.cshtml" />
-    <Content Include="Views\Filmes\Details.cshtml" />
-    <Content Include="Views\Filmes\Edit.cshtml" />
-    <Content Include="Views\Filmes\Index.cshtml" />
     <Content Include="Views\Tipo\Create.cshtml" />
     <Content Include="Views\Tipo\Delete.cshtml" />
     <Content Include="Views\Tipo\Details.cshtml" />
     <Content Include="Views\Tipo\Edit.cshtml" />
     <Content Include="Views\Tipo\Index.cshtml" />
     <Content Include="Views\Home\ListarPorGenero.cshtml" />
-    <Content Include="Views\Generos\Listar.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Generos\Listar2Listar.cshtml" />
+    <Content Include="Views\Filmes\Create.cshtml" />
+    <Content Include="Views\Filmes\Delete.cshtml" />
+    <Content Include="Views\Filmes\Details.cshtml" />
+    <Content Include="Views\Filmes\Edit.cshtml" />
+    <Content Include="Views\Filmes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

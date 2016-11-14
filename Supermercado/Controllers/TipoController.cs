@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Supermercado.AcessoDados;
 using Supermercado.Models;
@@ -13,12 +9,12 @@ namespace Supermercado.Controllers
 {
     public class TipoController : Controller
     {
-        private BancoContexto db = new BancoContexto();
+        private readonly BancoContexto _db = new BancoContexto();
 
         // GET: Tipo
         public ActionResult Index()
         {
-            return View(db.Tipos.ToList());
+            return View(_db.Tipos.ToList());
         }
 
         // GET: Tipo/Details/5
@@ -28,7 +24,7 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tipo tipo = db.Tipos.Find(id);
+            Tipo tipo = _db.Tipos.Find(id);
             if (tipo == null)
             {
                 return HttpNotFound();
@@ -51,8 +47,8 @@ namespace Supermercado.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Tipos.Add(tipo);
-                db.SaveChanges();
+                _db.Tipos.Add(tipo);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +62,7 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tipo tipo = db.Tipos.Find(id);
+            Tipo tipo = _db.Tipos.Find(id);
             if (tipo == null)
             {
                 return HttpNotFound();
@@ -83,8 +79,8 @@ namespace Supermercado.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tipo).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(tipo).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(tipo);
@@ -97,7 +93,7 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tipo tipo = db.Tipos.Find(id);
+            Tipo tipo = _db.Tipos.Find(id);
             if (tipo == null)
             {
                 return HttpNotFound();
@@ -110,9 +106,9 @@ namespace Supermercado.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tipo tipo = db.Tipos.Find(id);
-            db.Tipos.Remove(tipo);
-            db.SaveChanges();
+            Tipo tipo = _db.Tipos.Find(id);
+            _db.Tipos.Remove(tipo);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +116,7 @@ namespace Supermercado.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

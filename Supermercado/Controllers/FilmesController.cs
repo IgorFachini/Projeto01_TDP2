@@ -1,130 +1,192 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Supermercado.AcessoDados;
 using Supermercado.Models;
+using System.Linq.Dynamic;
+using System.Collections.Generic;
+using System;
 
 namespace Supermercado.Controllers
 {
     public class FilmesController : Controller
     {
-        private BancoContexto db = new BancoContexto();
+        private readonly BancoContexto _db = new BancoContexto();
 
+        // GET: Filme
         public ActionResult Index()
         {
-            var filmes = db.Filmes.Include(f => f.Genero);
-            return View(filmes.ToList());
+            // var filmes = _db.Filme.Include(g => g.Genero);
+            // return View(filmes.ToList());
+            return View();
         }
 
-        // GET: Filmes/Details/5
+        public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 5)
+        {
+            var chave = Request.Form.AllKeys.First(k => k.StartsWith("sort"));
+            var ordenacao = Request[chave];
+            var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
+            var filmes = _db.Filmes.Include(l => l.Genero);
+
+            var total = filmes.Count();
+
+            if (!string.IsNullOrWhiteSpace(searchPhrase))
+            {
+                int ano;
+                int.TryParse(searchPhrase, out ano);
+
+                decimal valor;
+                decimal.TryParse(searchPhrase, out valor);
+                filmes = filmes.Where("Titulo.Contains(@0) OR Diretor.Contains(@0) OR AnoLancamento == @1 OR Valor = @2", searchPhrase, ano, valor);
+            }
+
+            string campoOrdenacao = $"{campo} {ordenacao}";
+
+            var filmesPaginados = filmes.OrderBy(campoOrdenacao).Skip((current - 1) * rowCount).Take(rowCount);
+
+            return Json(new
+            {
+                rows = filmesPaginados.ToList(),
+                current,
+                rowCount,
+                total
+            }
+            , JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Filme filme = db.Filmes.Find(id);
-            if (filme == null)
+
+            Filme game = _db.Filmes.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
+            // game = db.Filme.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
+
+            if (game == null)
             {
                 return HttpNotFound();
             }
-            return View(filme);
-        }
 
-        // GET: Filmes/Create
+            return PartialView(game);
+        }
+        // GET: Filme/Create
         public ActionResult Create()
         {
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome");
-            return View();
+            ViewBag.GeneroId = new SelectList(_db.Generos, "Id", "Nome");
+            return PartialView();
         }
 
-        // POST: Filmes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titulo,Diretor,AnoLancamento,Valor,GeneroId")] Filme filme)
+        public JsonResult Create(Filme game)
         {
+            var tipos = _db.Tipos.ToList();
+            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Filme"));
+            game.Tipo = tipo;
+            game.TipoId = tipo.Id;
             if (ModelState.IsValid)
             {
-                db.Filmes.Add(filme);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                _db.Filmes.Add(game);
+                _db.SaveChanges();
+                return Json(new { resultado = true, message = "Filme cadastrado com sucesso" });
+            }
+            else
+            {
+                IEnumerable<ModelError> erros = ModelState.Values.SelectMany(item => item.Errors);
+
+                return Json(new { resultado = false, message = erros });
             }
 
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", filme.GeneroId);
-            return View(filme);
         }
 
-        // GET: Filmes/Edit/5
+        // GET: Filme/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Filme filme = db.Filmes.Find(id);
-            if (filme == null)
+            Filme game = _db.Filmes.Find(id);
+            if (game == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", filme.GeneroId);
-            return View(filme);
+            ViewBag.GeneroId = new SelectList(_db.Generos, "Id", "Nome", game.GeneroId);
+            return PartialView(game);
         }
 
-        // POST: Filmes/Edit/5
+        // POST: Filme/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titulo,Diretor,AnoLancamento,Valor,GeneroId")] Filme filme)
+        public JsonResult Edit(Filme game)
         {
+            var tipos = _db.Tipos.ToList();
+            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Filme"));
+            game.Tipo = tipo;
+            game.TipoId = tipo.Id;
             if (ModelState.IsValid)
             {
-                db.Entry(filme).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                _db.Entry(game).State = EntityState.Modified;
+                _db.SaveChanges();
+
+                return Json(new { resultado = true, message = "Filme editado com sucesso" });
             }
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", filme.GeneroId);
-            return View(filme);
+            else
+            {
+                IEnumerable<ModelError> erros = ModelState.Values.SelectMany(item => item.Errors);
+
+                return Json(new { resultado = false, message = erros });
+            }
         }
 
-        // GET: Filmes/Delete/5
+        // GET: Filme/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Filme filme = db.Filmes.Find(id);
-            if (filme == null)
+            Filme game = _db.Filmes.Find(id);
+            if (game == null)
             {
                 return HttpNotFound();
             }
-            return View(filme);
+            return PartialView(game);
         }
 
-        // POST: Filmes/Delete/5
+        // POST: Filme/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public JsonResult DeleteConfirmed(int id)
         {
-            Filme filme = db.Filmes.Find(id);
-            db.Filmes.Remove(filme);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            try
+            {
+                Filme game = _db.Filmes.Find(id);
 
+                _db.Filmes.Remove(game);
+
+                _db.SaveChanges();
+
+                return Json(new { resultado = true, message = "Filme excluído com sucesso" });
+            }
+            catch (Exception e)
+            {
+                return Json(new { resultado = false, message = e.Message });
+            }
+
+
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

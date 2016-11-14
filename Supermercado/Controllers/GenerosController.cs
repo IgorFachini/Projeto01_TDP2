@@ -1,9 +1,12 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Supermercado.AcessoDados;
 using Supermercado.Models;
+using System.Linq.Dynamic;
 
 namespace Supermercado.Controllers
 {
@@ -14,10 +17,38 @@ namespace Supermercado.Controllers
         // GET: Generos
         public ActionResult Index()
         {
-            return View(_db.Generos.ToList());
+            return View();
         }
 
-        // GET: Generos/Details/5
+        public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 5)
+        {
+            var chave = Request.Form.AllKeys.First(k => k.StartsWith("sort"));
+            var ordenacao = Request[chave];
+            var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
+            var generos = _db.Generos.ToList();
+
+            var total = generos.Count();
+
+            if (!string.IsNullOrWhiteSpace(searchPhrase))
+            {            
+                generos = generos.FindAll(g => g.Nome.ToLower().Contains(searchPhrase.ToLower()));
+            }
+
+            string campoOrdenacao = $"{campo} {ordenacao}";
+
+            var generosPaginados = generos.OrderBy(campoOrdenacao).Skip((current - 1) * rowCount).Take(rowCount);
+
+            return Json(new
+            {
+                rows = generosPaginados.ToList(),
+                current,
+                rowCount,
+                total
+            }
+            , JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -29,10 +60,10 @@ namespace Supermercado.Controllers
             {
                 return HttpNotFound();
             }
-            return View(genero);
+            return PartialView(genero);
         }
 
-        public PartialViewResult Listar()
+        public PartialViewResult Listar2Listar()
         {
             return PartialView(_db.Generos.ToList());
         }
@@ -41,24 +72,25 @@ namespace Supermercado.Controllers
         // GET: Generos/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
-
-        // POST: Generos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome")] Genero genero)
+        public JsonResult Create(Genero genero)
         {
             if (ModelState.IsValid)
             {
                 _db.Generos.Add(genero);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(new { resultado = true, message = "Genero cadastrado com sucesso" });
             }
+            else
+            {
+                IEnumerable<ModelError> erros = ModelState.Values.SelectMany(item => item.Errors);
 
-            return View(genero);
+                return Json(new { resultado = false, message = erros });
+            }
         }
 
         // GET: Generos/Edit/5
@@ -73,23 +105,27 @@ namespace Supermercado.Controllers
             {
                 return HttpNotFound();
             }
-            return View(genero);
+            return PartialView(genero);
         }
 
-        // POST: Generos/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome")] Genero genero)
+        public JsonResult Edit(Genero genero)
         {
             if (ModelState.IsValid)
             {
                 _db.Entry(genero).State = EntityState.Modified;
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return Json(new { resultado = true, message = "Genero editado com sucesso" });
             }
-            return View(genero);
+            else
+            {
+                IEnumerable<ModelError> erros = ModelState.Values.SelectMany(item => item.Errors);
+
+                return Json(new { resultado = false, message = erros });
+            }
         }
 
         // GET: Generos/Delete/5
@@ -104,18 +140,29 @@ namespace Supermercado.Controllers
             {
                 return HttpNotFound();
             }
-            return View(genero);
+            return PartialView(genero);
         }
 
         // POST: Generos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public JsonResult DeleteConfirmed(int id)
         {
-            Genero genero = _db.Generos.Find(id);
-            _db.Generos.Remove(genero);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Genero genero = _db.Generos.Find(id);
+
+                _db.Generos.Remove(genero);
+
+                _db.SaveChanges();
+
+                return Json(new { resultado = true, message = "Genero excluído com sucesso" });
+            }
+            catch (Exception e)
+            {
+                return Json(new { resultado = false, message = e.Message });
+            }
+
         }
 
         protected override void Dispose(bool disposing)
