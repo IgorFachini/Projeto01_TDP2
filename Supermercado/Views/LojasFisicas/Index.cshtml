@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Listar Lojas Fisicas";
+}
+
+<p>
+    <a href="javascript:void(0)" data-action="Create" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Nova Loja Fisica
+    </a>
+</p>
+
+<table id="gridDados" class="table table-striped">
+    <thead>
+        <tr>
+            <th data-column-id="Estado" data-order="asc">Estado</th>
+            <th data-column-id="Cidade" data-order="asc">Cidade</th>
+            <th data-column-id="CEP" data-order="asc">CEP</th>
+            <th data-column-id="Telefone" data-order="asc">Telefone</th>
+            <th data-formatter="Acoes" data-sortable="false">Ações</th>
+        </tr>
+    </thead>
+</table>
+
+@section scripts{
+
+    <script src="~/Scripts/toastr.js"></script>
+    @Scripts.Render("~/bundles/jquerybootgrid")
+    <script src="~/Scripts/projeto/ControlarGrid.js"></script>
+
+    <script type="text/javascript">
+
+        numeral.language("pt-br");
+
+        var controller = "LojasFisicas";
+
+        var urlListar = "@Url.Action($"Listar")";
+
+        $(document).ready(configurarControles);
+
+    </script>
+
+}
+
+@section estilos{
+
+    <link href="~/Content/jquery.bootgrid.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+}

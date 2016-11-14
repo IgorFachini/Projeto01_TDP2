@@ -209,6 +209,7 @@
     <Compile Include="Controllers\GenerosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LivrosController.cs" />
+    <Compile Include="Controllers\LojasFisicasController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TipoController.cs" />
     <Compile Include="Global.asax.cs">
@@ -223,6 +224,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Livro.cs" />
     <Compile Include="Models\ConteudoPorGenero.cs" />
+    <Compile Include="Models\LojaFisica.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tipo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -366,6 +368,11 @@
     <Content Include="Views\Filmes\Details.cshtml" />
     <Content Include="Views\Filmes\Edit.cshtml" />
     <Content Include="Views\Filmes\Index.cshtml" />
+    <Content Include="Views\LojasFisicas\Create.cshtml" />
+    <Content Include="Views\LojasFisicas\Delete.cshtml" />
+    <Content Include="Views\LojasFisicas\Details.cshtml" />
+    <Content Include="Views\LojasFisicas\Edit.cshtml" />
+    <Content Include="Views\LojasFisicas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

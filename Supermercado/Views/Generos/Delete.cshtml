@@ -20,7 +20,7 @@
     </dl>
 
 
-    @using (Html.BeginForm("Delete", "Generos", FormMethod.Post, new { id = "formCrud" }))
+    @using (Html.BeginForm($"Delete", $"Generos", FormMethod.Post, new { id = "formCrud" }))
     {
         @Html.AntiForgeryToken()
         <div class="form-actions no-color">

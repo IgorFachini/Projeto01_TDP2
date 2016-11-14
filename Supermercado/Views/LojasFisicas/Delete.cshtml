@@ -1,0 +1,60 @@
+﻿@model Supermercado.Models.LojaFisica
+
+@{
+    ViewBag.Title = "Apagar";
+}
+
+<h2><span class="glyphicon glyphicon-remove"></span> @ViewBag.Title Loja Fisica</h2>
+<hr />
+<h3>Confirma a exclução dessa loja fisica?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cidade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cidade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CEP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CEP)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+
+    </dl>
+
+
+    @using (Html.BeginForm($"Delete", $"LojasFisicas", FormMethod.Post, new { id = "formCrud" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="button" value="Confirmar" class="btn btn-danger" />
+        </div>
+    }
+</div>
+
+<script src="~/Scripts/projeto/EnviarFormulario.js"></script>
+
+<script type="text/javascript">
+
+    var btnAcao = $("input[type='button']");
+    var formulario = $("#formCrud");
+
+</script>

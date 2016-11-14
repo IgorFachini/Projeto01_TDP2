@@ -9,6 +9,17 @@ namespace Supermercado.AcessoDados
     {
         protected override void Seed(BancoContexto contexto)
         {
+            List<LojaFisica> lojasFisicas = new List<LojaFisica>()
+            {
+                new LojaFisica()
+                {
+                    Estado = "Santa Catarina",
+                    Cidade = "Jaraguá do sul",
+                    CEP =  "6969-6969",
+                    Telefone = "9999-9999"
+                }
+            };
+            lojasFisicas.ForEach(lj => contexto.LojasFisicas.Add(lj));
             List<Tipo> tipos = new List<Tipo>()
             {
                 new Tipo() {Nome = "Livro" },
