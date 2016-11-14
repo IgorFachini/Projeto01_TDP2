@@ -56,3 +56,26 @@
 
 </script>
 
+<script src="~/Scripts/jquery-1.10.2.intellisense.js"></script>
+
+<script>
+    $('#CEP').change(function (e) {
+        e.preventDefault();
+        $("#Cidade").val('');
+        $("#Estado").val('');
+
+        var cep = $('#CEP').val().replace("-", "");
+
+        $.getJSON("http://cep.republicavirtual.com.br/web_cep.php?cep=" + cep + "&formato=json", {}, function (data) {
+
+            if (data.resultado_txt = 'sucesso - cep completo') {        
+                $("#Cidade").val(data.cidade);
+                $("#Estado").val(data.uf);
+            }
+
+        });
+
+        
+
+    });
+</script>
