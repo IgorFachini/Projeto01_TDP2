@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Supermercado.AcessoDados;
 using Supermercado.Models;
@@ -14,7 +12,7 @@ namespace Supermercado.Controllers
 {
     public class LivrosController : Controller
     {
-        private BancoContexto db = new BancoContexto();
+        private readonly BancoContexto _db = new BancoContexto();
 
         // GET: Livros
         public ActionResult Index()
@@ -23,31 +21,28 @@ namespace Supermercado.Controllers
         }
         
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 5) {
-            string chave = Request.Form.AllKeys.Where(k => k.StartsWith("sort")).First();
-            string ordenacao = Request[chave];
-            string campo = chave.Replace("sort[", String.Empty).Replace("]", String.Empty);
-            var livros = db.Livros.Include(l => l.Genero);
+            var chave = Request.Form.AllKeys.First(k => k.StartsWith("sort"));
+            var ordenacao = Request[chave];
+            var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
+            var livros = _db.Livros.Include(l => l.Genero);
 
-            int total = livros.Count();
+            var total = livros.Count();
 
-            if (!String.IsNullOrWhiteSpace(searchPhrase)) {
-                int ano = 0;
+            if (!string.IsNullOrWhiteSpace(searchPhrase)) {
+                int ano;
                 int.TryParse(searchPhrase, out ano);
 
-                decimal valor = 0.0m;
+                decimal valor;
                 decimal.TryParse(searchPhrase, out valor);
                 livros = livros.Where("Titulo.Contains(@0) OR Autor.Contains(@0) OR AnoEdicao == @1 OR Valor = @2", searchPhrase, ano, valor);
             }
 
-            string campoOrdenacao = String.Format("{0} {1}", campo, ordenacao);
+            string campoOrdenacao = $"{campo} {ordenacao}";
 
             var livrosPaginados = livros.OrderBy(campoOrdenacao).Skip((current - 1) * rowCount).Take(rowCount);
 
             return Json(new {
-                rows = livrosPaginados.ToList(),
-                current = current,
-                rowCount = rowCount,
-                total = total
+                rows = livrosPaginados.ToList(), current, rowCount, total
             }
             , JsonRequestBehavior.AllowGet);
         }
@@ -58,8 +53,8 @@ namespace Supermercado.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Livro livro = db.Livros.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
-                  livro = db.Livros.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
+            Livro livro = _db.Livros.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
+                 // livro = db.Livros.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
 
             if (livro == null) {
                 return HttpNotFound();
@@ -70,17 +65,20 @@ namespace Supermercado.Controllers
         // GET: Livros/Create
         public ActionResult Create()
         {
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome");
-            ViewBag.TipoId = new SelectList(db.Tipos, "Id", "Nome");
+            ViewBag.GeneroId = new SelectList(_db.Generos, "Id", "Nome");
             return PartialView();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult Create(Livro livro) {
+            var tipos = _db.Tipos.ToList();
+            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Livro"));
+            livro.Tipo = tipo;
+            livro.TipoId = tipo.Id;
             if (ModelState.IsValid) {
-                db.Livros.Add(livro);
-                db.SaveChanges();
+                _db.Livros.Add(livro);
+                _db.SaveChanges();
                 return Json(new { resultado = true, message = "Livro cadastrado com sucesso" });
             } else {
                 IEnumerable<ModelError> erros = ModelState.Values.SelectMany(item => item.Errors);
@@ -97,12 +95,12 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Livro livro = db.Livros.Find(id);
+            Livro livro = _db.Livros.Find(id);
             if (livro == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", livro.GeneroId);
+            ViewBag.GeneroId = new SelectList(_db.Generos, "Id", "Nome", livro.GeneroId);
             return PartialView(livro);
         }
 
@@ -112,9 +110,13 @@ namespace Supermercado.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult Edit(Livro livro) {
+            var tipos = _db.Tipos.ToList();
+            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Livro"));
+            livro.Tipo = tipo;
+            livro.TipoId = tipo.Id;
             if (ModelState.IsValid) {
-                db.Entry(livro).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(livro).State = EntityState.Modified;
+                _db.SaveChanges();
 
                 return Json(new { resultado = true, message = "Livro editado com sucesso" });
             } else {
@@ -131,7 +133,7 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Livro livro = db.Livros.Find(id);
+            Livro livro = _db.Livros.Find(id);
             if (livro == null)
             {
                 return HttpNotFound();
@@ -144,11 +146,11 @@ namespace Supermercado.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult DeleteConfirmed(int id) {
             try {
-                Livro livro = db.Livros.Find(id);
+                Livro livro = _db.Livros.Find(id);
 
-                db.Livros.Remove(livro);
+                _db.Livros.Remove(livro);
 
-                db.SaveChanges();
+                _db.SaveChanges();
 
                 return Json(new { resultado = true, message = "Livro excluído com sucesso" });
             } catch (Exception e) {
@@ -162,7 +164,7 @@ namespace Supermercado.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

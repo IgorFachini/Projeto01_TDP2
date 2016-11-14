@@ -9,12 +9,12 @@ namespace Supermercado.Controllers
 {
     public class GenerosController : Controller
     {
-        private BancoContexto db = new BancoContexto();
+        private readonly BancoContexto _db = new BancoContexto();
 
         // GET: Generos
         public ActionResult Index()
         {
-            return View(db.Generos.ToList());
+            return View(_db.Generos.ToList());
         }
 
         // GET: Generos/Details/5
@@ -24,7 +24,7 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Genero genero = db.Generos.Find(id);
+            Genero genero = _db.Generos.Find(id);
             if (genero == null)
             {
                 return HttpNotFound();
@@ -34,7 +34,7 @@ namespace Supermercado.Controllers
 
         public PartialViewResult Listar()
         {
-            return PartialView(db.Generos.ToList());
+            return PartialView(_db.Generos.ToList());
         }
 
 
@@ -53,8 +53,8 @@ namespace Supermercado.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Generos.Add(genero);
-                db.SaveChanges();
+                _db.Generos.Add(genero);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -68,7 +68,7 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Genero genero = db.Generos.Find(id);
+            Genero genero = _db.Generos.Find(id);
             if (genero == null)
             {
                 return HttpNotFound();
@@ -85,8 +85,8 @@ namespace Supermercado.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(genero).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(genero).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(genero);
@@ -99,7 +99,7 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Genero genero = db.Generos.Find(id);
+            Genero genero = _db.Generos.Find(id);
             if (genero == null)
             {
                 return HttpNotFound();
@@ -112,9 +112,9 @@ namespace Supermercado.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Genero genero = db.Generos.Find(id);
-            db.Generos.Remove(genero);
-            db.SaveChanges();
+            Genero genero = _db.Generos.Find(id);
+            _db.Generos.Remove(genero);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -122,7 +122,7 @@ namespace Supermercado.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
