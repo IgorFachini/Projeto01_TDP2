@@ -2,26 +2,25 @@
 @{
     ViewBag.Title = "About";
 }
-<h1>Sobre nos ...</h1>
-<p>@Resources.Site.Texto</p>
-<p>
-    <a href="~/Home/Ingles">Ingles - Estados Unidos</a></p>
-<p>
-    <a href="~/Home/Portugues">Portugues - Brasil</a>
-    
-   
-</p>
+<div class="container">
+    <div>
+       <CENTER><img src="~/images/-590246944_00000.jpg" /></CENTER>
+    </div>
+    <div class="dropdown">
+        <strong> Sobre nos... </strong>
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Escolha o idioma:
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="~/Home/Ingles">ENGLISH</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="~/Home/Portugues">PORTUGUES</a></li>
+        </ul>
+    </div>
 
-<p>
-    <a href="~/Home/Portugues" class="btn btn-primary">
-        <span class="glyphicon glyphicon-bitcoin" aria-hidden="true"></span>
-        Portugues
-    </a>
-</p>
+    <p>@Resources.Site.Texto</p>
+</div>
 
-<p>
-    <a href="~/Home/Ingles" class="btn btn-default">
-        <span class="glyphicon glyphicon-apple" aria-hidden="true"></span>
-        Ingles
-    </a>
-</p>
+
+
