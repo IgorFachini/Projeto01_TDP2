@@ -118,10 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Texto" xml:space="preserve">
-    <value>Livraria da Folha is a business unit of Grupo Folha, which publishes Folha de S.Paulo.
-
-Our goal is to inform the reader about the major titles in the market, with notes on releases, reprints and exclusive promotions. A specialized copywriting team is responsible for reviewing and suggesting the best books available in our extensive catalog. A rich and detailed search system makes it easy to search and locate books in all areas to which they may relate. Livraria da Folha also offers DVD, Blu-ray and Games products, with exclusive pages listing the best movies, TV series and games for PC and video games. A bookstore where you find information easy, safe and fast.
-
-Livraria da Folha also offers DVD, Blu-ray and Games products, with exclusive pages listing the best movies, TV series and games for PC and video games. A bookstore where you find information easy, safe and fast. Our goal is to inform the reader about the major titles in the market, with notes on releases, reprints and exclusive promotions. A team of specialized copywriters is responsible for analyzing and suggesting the best books available in our extensive catalog. A rich and detailed search system makes it easy to search and locate books in all areas to which they may relate.</value>
+    <value>Livraria da Folha is a business unit of Grupo Folha, which publishes Folha de S.Paulo.</value>
+  </data>
+  <data name="Texto2" xml:space="preserve">
+    <value>Our goal is to inform the reader about the major titles in the market, with notes on releases, reprints and exclusive promotions. A specialized copywriting team is responsible for reviewing and suggesting the best books available in our extensive catalog. A rich and detailed search system makes it easy to search and locate books in all areas to which they may relate. Livraria da Folha also offers DVD, Blu-ray and Games products, with exclusive pages listing the best movies, TV series and games for PC and video games. A bookstore where you find information easy, safe and fast.</value>
+  </data>
+  <data name="Texto3" xml:space="preserve">
+    <value>Livraria da Folha also offers DVD, Blu-ray and Games products, with exclusive pages listing the best movies, TV series and games for PC and video games. A bookstore where you find information easy, safe and fast. Our goal is to inform the reader about the major titles in the market, with notes on releases, reprints and exclusive promotions. A team of specialized copywriters is responsible for analyzing and suggesting the best books available in our extensive catalog. A rich and detailed search system makes it easy to search and locate books in all areas to which they may relate.</value>
   </data>
 </root>

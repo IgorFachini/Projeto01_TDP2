@@ -118,10 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Texto" xml:space="preserve">
-    <value>A Livraria da Folha é uma unidade de negócios do Grupo Folha, que publica a Folha de S.Paulo.
-
-Nosso objetivo é informar o leitor sobre os principais títulos do mercado,com notas sobre lançamentos, reimpressões e promoções exclusivas. Uma equipe de redatores especializada é responsável por analisar e sugerir os melhores livros disponíveis em nosso extenso catálogo. Um rico e detalhado sistema de busca facilita a pesquisa e a localização dos livros em todas as áreas àsquais possam estar relacionados. A Livraria da Folha também oferece produtos em DVD, Blu-Ray e Games, com páginas exclusivas que listam os melhores filmes, séries televisivas e jogos para videogames e PC. Uma livraria onde você encontra informação fácil, segura e com rapidez.
-
-A Livraria da Folha também oferece produtos em DVD, Blu-Ray e Games, com páginas exclusivas que listam os melhores filmes, séries televisivas e jogos para videogames e PC. Uma livraria onde você encontra informação fácil, segura e com rapidez. Nosso objetivo é informar o leitor sobre os principais títulos do mercado,com notas sobre lançamentos, reimpressões e promoções exclusivas. Uma equipe de redatores especializada é responsável por analisar e sugerir os melhores livros disponíveis em nosso extenso catálogo. Um rico e detalhado sistema de busca facilita a pesquisa e a localização dos livros em todas as áreas àsquais possam estar relacionados.</value>
+    <value>A Livraria da Folha é uma unidade de negócios do Grupo Folha, que publica a Folha de S.Paulo.</value>
+  </data>
+  <data name="Texto2" xml:space="preserve">
+    <value>Nosso objetivo é informar o leitor sobre os principais títulos do mercado,com notas sobre lançamentos, reimpressões e promoções exclusivas. Uma equipe de redatores especializada é responsável por analisar e sugerir os melhores livros disponíveis em nosso extenso catálogo. Um rico e detalhado sistema de busca facilita a pesquisa e a localização dos livros em todas as áreas àsquais possam estar relacionados. A Livraria da Folha também oferece produtos em DVD, Blu-Ray e Games, com páginas exclusivas que listam os melhores filmes, séries televisivas e jogos para videogames e PC. Uma livraria onde você encontra informação fácil, segura e com rapidez.</value>
+  </data>
+  <data name="Texto3" xml:space="preserve">
+    <value>A Livraria da Folha também oferece produtos em DVD, Blu-Ray e Games, com páginas exclusivas que listam os melhores filmes, séries televisivas e jogos para videogames e PC. Uma livraria onde você encontra informação fácil, segura e com rapidez. Nosso objetivo é informar o leitor sobre os principais títulos do mercado,com notas sobre lançamentos, reimpressões e promoções exclusivas. Uma equipe de redatores especializada é responsável por analisar e sugerir os melhores livros disponíveis em nosso extenso catálogo. Um rico e detalhado sistema de busca facilita a pesquisa e a localização dos livros em todas as áreas àsquais possam estar relacionados.</value>
   </data>
 </root>

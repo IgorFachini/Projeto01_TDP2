@@ -61,13 +61,29 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A Livraria da Folha é uma unidade de negócios do Grupo Folha, que publica a Folha de S.Paulo.
-        ///
-        ///Nosso objetivo é informar o leitor sobre os principais títulos do mercado,com notas sobre lançamentos, reimpressões e promoções exclusivas. Uma equipe de redatores especializada é responsável por analisar e sugerir os melhores livros disponíveis em nosso extenso catálogo. Um rico e detalhado sistema de busca facilita a pesquisa e a localização dos livros em todas as áreas àsquais possam estar relacionados. A Liv [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to A Livraria da Folha é uma unidade de negócios do Grupo Folha, que publica a Folha de S.Paulo..
         /// </summary>
         internal static string Texto {
             get {
                 return ResourceManager.GetString("Texto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nosso objetivo é informar o leitor sobre os principais títulos do mercado,com notas sobre lançamentos, reimpressões e promoções exclusivas. Uma equipe de redatores especializada é responsável por analisar e sugerir os melhores livros disponíveis em nosso extenso catálogo. Um rico e detalhado sistema de busca facilita a pesquisa e a localização dos livros em todas as áreas àsquais possam estar relacionados. A Livraria da Folha também oferece produtos em DVD, Blu-Ray e Games, com páginas exclusivas que listam [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Texto2 {
+            get {
+                return ResourceManager.GetString("Texto2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Livraria da Folha também oferece produtos em DVD, Blu-Ray e Games, com páginas exclusivas que listam os melhores filmes, séries televisivas e jogos para videogames e PC. Uma livraria onde você encontra informação fácil, segura e com rapidez. Nosso objetivo é informar o leitor sobre os principais títulos do mercado,com notas sobre lançamentos, reimpressões e promoções exclusivas. Uma equipe de redatores especializada é responsável por analisar e sugerir os melhores livros disponíveis em nosso extenso catál [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Texto3 {
+            get {
+                return ResourceManager.GetString("Texto3", resourceCulture);
             }
         }
     }
