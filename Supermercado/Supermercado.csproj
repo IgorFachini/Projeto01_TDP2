@@ -222,6 +222,7 @@
     <Compile Include="Controllers\LojasFisicasController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TipoController.cs" />
+    <Compile Include="Controllers\WebMailController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -237,6 +238,7 @@
     <Compile Include="Models\LojaFisica.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tipo.cs" />
+    <Compile Include="Models\WebMail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -384,6 +386,8 @@
     <Content Include="Views\LojasFisicas\Details.cshtml" />
     <Content Include="Views\LojasFisicas\Edit.cshtml" />
     <Content Include="Views\LojasFisicas\Index.cshtml" />
+    <Content Include="Views\WebMail\Index.cshtml" />
+    <Content Include="Views\WebMail\SendEmailView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
