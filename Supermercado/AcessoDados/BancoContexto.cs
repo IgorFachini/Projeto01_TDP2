@@ -17,5 +17,9 @@ namespace Supermercado.AcessoDados {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Properties<string>().Configure(c => c.HasMaxLength(100));
         }
+
+        public DbSet<ActionFigure> ActionFigures { get; set; }
+
+        public DbSet<Manga> Mangas { get; set; }
     }
 }
