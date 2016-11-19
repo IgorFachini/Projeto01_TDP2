@@ -63,12 +63,6 @@ namespace Supermercado.Controllers
             return PartialView(lojaFisica);
         }
 
-        public PartialViewResult Listar2Listar()
-        {
-            return PartialView(_db.LojasFisicas.ToList());
-        }
-
-
         // GET: LojaFisicas/Create
         public ActionResult Create()
         {

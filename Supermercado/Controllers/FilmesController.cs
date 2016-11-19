@@ -64,7 +64,7 @@ namespace Supermercado.Controllers
             }
 
             Filme game = _db.Filmes.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
-            // game = db.Filme.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
+            // game = _db.Filme.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
 
             if (game == null)
             {

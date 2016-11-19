@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Supermercado.AcessoDados;
 using Supermercado.Models;
@@ -10,15 +12,15 @@ using System.Linq.Dynamic;
 
 namespace Supermercado.Controllers
 {
-    public class GamesController : Controller
+    public class MangasController : Controller
     {
-        private readonly BancoContexto _db  = new BancoContexto();
+        private BancoContexto _db = new BancoContexto();
 
-        // GET: Games
+        // GET: Mangas
         public ActionResult Index()
         {
-           // var games = _db.Games.Include(g => g.Genero);
-           // return View(games.ToList());
+            //var mangas = _db.Mangas.Include(m => m.Genero).Include(m => m.Tipo);
+            //return View(mangas.ToList());
             return View();
         }
 
@@ -27,9 +29,9 @@ namespace Supermercado.Controllers
             var chave = Request.Form.AllKeys.First(k => k.StartsWith("sort"));
             var ordenacao = Request[chave];
             var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
-            var games = _db.Games.Include(l => l.Genero);
+            var mangas = _db.Mangas.Include(l => l.Genero);
 
-            var total = games.Count();
+            var total = mangas.Count();
 
             if (!string.IsNullOrWhiteSpace(searchPhrase))
             {
@@ -38,22 +40,23 @@ namespace Supermercado.Controllers
 
                 decimal valor;
                 decimal.TryParse(searchPhrase, out valor);
-                games = games.Where("Titulo.Contains(@0) OR Plataforma.Contains(@0) OR AnoLancamento == @1 OR Valor = @2", searchPhrase, ano, valor);
+                mangas = mangas.Where("Titulo.Contains(@0) OR Autor.Contains(@0) OR Ano == @1 OR Valor = @2", searchPhrase, ano, valor);
             }
 
             string campoOrdenacao = $"{campo} {ordenacao}";
 
-            var gamesPaginados = games.OrderBy(campoOrdenacao).Skip((current - 1) * rowCount).Take(rowCount);
+            var mangasPaginados = mangas.OrderBy(campoOrdenacao).Skip((current - 1) * rowCount).Take(rowCount);
 
             return Json(new
             {
-                rows = gamesPaginados.ToList(),
+                rows = mangasPaginados.ToList(),
                 current,
                 rowCount,
                 total
             }
             , JsonRequestBehavior.AllowGet);
         }
+
 
         [HttpGet]
         public ActionResult Details(int? id)
@@ -63,17 +66,17 @@ namespace Supermercado.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Game game = _db.Games.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
-            // game = _db.Games.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
+            Manga manga = _db.Mangas.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
+            // manga = _db.Mangas.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
 
-            if (game == null)
+            if (manga == null)
             {
                 return HttpNotFound();
             }
 
-            return PartialView(game);
+            return PartialView(manga);
         }
-        // GET: Games/Create
+        // GET: Mangas/Create
         public ActionResult Create()
         {
             ViewBag.GeneroId = new SelectList(_db.Generos, "Id", "Nome");
@@ -82,17 +85,17 @@ namespace Supermercado.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Create(Game game)
+        public JsonResult Create(Manga manga)
         {
             var tipos = _db.Tipos.ToList();
-            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Game"));
-            game.Tipo = tipo;
-            game.TipoId = tipo.Id;
+            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Manga"));
+            manga.Tipo = tipo;
+            manga.TipoId = tipo.Id;
             if (ModelState.IsValid)
             {
-                _db.Games.Add(game);
+                _db.Mangas.Add(manga);
                 _db.SaveChanges();
-                return Json(new { resultado = true, message = "Game cadastrado com sucesso" });
+                return Json(new { resultado = true, message = "Manga cadastrado com sucesso" });
             }
             else
             {
@@ -103,39 +106,39 @@ namespace Supermercado.Controllers
 
         }
 
-        // GET: Games/Edit/5
+        // GET: Mangas/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Game game = _db.Games.Find(id);
-            if (game == null)
+            Manga manga = _db.Mangas.Find(id);
+            if (manga == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.GeneroId = new SelectList(_db.Generos, "Id", "Nome", game.GeneroId);
-            return PartialView(game);
+            ViewBag.GeneroId = new SelectList(_db.Generos, "Id", "Nome", manga.GeneroId);
+            return PartialView(manga);
         }
 
-        // POST: Games/Edit/5
+        // POST: Mangas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Edit(Game game)
+        public JsonResult Edit(Manga manga)
         {
             var tipos = _db.Tipos.ToList();
-            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Game"));
-            game.Tipo = tipo;
-            game.TipoId = tipo.Id;
+            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Manga"));
+            manga.Tipo = tipo;
+            manga.TipoId = tipo.Id;
             if (ModelState.IsValid)
             {
-                _db.Entry(game).State = EntityState.Modified;
+                _db.Entry(manga).State = EntityState.Modified;
                 _db.SaveChanges();
 
-                return Json(new { resultado = true, message = "Game editado com sucesso" });
+                return Json(new { resultado = true, message = "Manga editado com sucesso" });
             }
             else
             {
@@ -145,35 +148,35 @@ namespace Supermercado.Controllers
             }
         }
 
-        // GET: Games/Delete/5
+        // GET: Mangas/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Game game = _db.Games.Find(id);
-            if (game == null)
+            Manga manga = _db.Mangas.Find(id);
+            if (manga == null)
             {
                 return HttpNotFound();
             }
-            return PartialView(game);
+            return PartialView(manga);
         }
 
-        // POST: Games/Delete/5
+        // POST: Mangas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public JsonResult DeleteConfirmed(int id)
         {
             try
             {
-                Game game = _db.Games.Find(id);
+                Manga manga = _db.Mangas.Find(id);
 
-                _db.Games.Remove(game);
+                _db.Mangas.Remove(manga);
 
                 _db.SaveChanges();
 
-                return Json(new { resultado = true, message = "Game excluído com sucesso" });
+                return Json(new { resultado = true, message = "Manga excluído com sucesso" });
             }
             catch (Exception e)
             {
@@ -182,6 +185,7 @@ namespace Supermercado.Controllers
 
 
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

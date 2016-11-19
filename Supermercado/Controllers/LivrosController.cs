@@ -54,7 +54,7 @@ namespace Supermercado.Controllers
             }
 
             Livro livro = _db.Livros.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
-                 // livro = db.Livros.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
+                 // livro = _db.Livros.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
 
             if (livro == null) {
                 return HttpNotFound();

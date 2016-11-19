@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Threading;
 
 namespace Supermercado.Controllers {
+    [AllowAnonymous]
     public class HomeController : Controller {
 
         private readonly BancoContexto _db = new BancoContexto();
@@ -60,6 +61,12 @@ namespace Supermercado.Controllers {
 
             return PartialView(conteudoPorGenero);
         }
+
+        public PartialViewResult Listar2Listar()
+        {
+            return PartialView(_db.Generos.ToList());
+        }
+
 
         public ActionResult About()
         {

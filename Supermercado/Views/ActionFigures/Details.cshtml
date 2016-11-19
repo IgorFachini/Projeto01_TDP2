@@ -1,0 +1,66 @@
+﻿@model Supermercado.Models.ActionFigure
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ActionFigure</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Genero.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genero.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Figura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Figura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fabricante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fabricante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
