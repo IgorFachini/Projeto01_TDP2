@@ -381,7 +381,7 @@
     <Content Include="Views\Home\ListarPorGenero.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="Views\Generos\Listar2Listar.cshtml" />
+    <Content Include="Views\Home\Listar2Listar.cshtml" />
     <Content Include="Views\Filmes\Create.cshtml" />
     <Content Include="Views\Filmes\Delete.cshtml" />
     <Content Include="Views\Filmes\Details.cshtml" />

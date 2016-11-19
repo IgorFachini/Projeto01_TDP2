@@ -5,7 +5,9 @@ using System.Collections;
 
 namespace Supermercado.AcessoDados {
     public class BancoContexto : DbContext{
-           
+
+
+        public BancoContexto() : base("DefaultConnection") { }
 
         public DbSet<Genero> Generos { get;  set; }
         public DbSet<Tipo> Tipos { get;  set; }

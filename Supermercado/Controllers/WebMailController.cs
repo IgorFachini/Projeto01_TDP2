@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Supermercado.Controllers
 {
+    [AllowAnonymous]
     public class WebMailController : Controller
     {
         // GET: Index view  

@@ -10,6 +10,7 @@ using System.Linq.Dynamic;
 
 namespace Supermercado.Controllers
 {
+    
     public class GenerosController : Controller
     {
         private readonly BancoContexto _db = new BancoContexto();
@@ -63,11 +64,7 @@ namespace Supermercado.Controllers
             return PartialView(genero);
         }
 
-        public PartialViewResult Listar2Listar()
-        {
-            return PartialView(_db.Generos.ToList());
-        }
-
+      
 
         // GET: Generos/Create
         public ActionResult Create()
