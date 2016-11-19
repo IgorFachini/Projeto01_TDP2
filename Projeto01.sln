@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supermercado", "Supermercado\Supermercado.csproj", "{BE7B274E-980A-41E1-906C-034FFCC57617}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoTeste", "..\..\..\Documents\Visual Studio 2015\Projects\ProjetoTeste\ProjetoTeste\ProjetoTeste.csproj", "{FEDEFDCF-4E0F-4763-8D6C-F39784F7055F}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BE7B274E-980A-41E1-906C-034FFCC57617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE7B274E-980A-41E1-906C-034FFCC57617}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE7B274E-980A-41E1-906C-034FFCC57617}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE7B274E-980A-41E1-906C-034FFCC57617}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FEDEFDCF-4E0F-4763-8D6C-F39784F7055F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FEDEFDCF-4E0F-4763-8D6C-F39784F7055F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEDEFDCF-4E0F-4763-8D6C-F39784F7055F}.Release|Any CPU.ActiveCfg = Release|Any CPU

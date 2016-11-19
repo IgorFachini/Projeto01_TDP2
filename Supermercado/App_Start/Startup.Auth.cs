@@ -58,11 +58,13 @@ namespace Supermercado
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+           app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "730198193070-4foagrv2s09rk8ug46jk95e2inpgpf76.apps.googleusercontent.com",
+                ClientSecret = "IaBr-6QsBF_WbCPp8Ox4sXun"
+           });
+         
+
         }
     }
 }
