@@ -1,69 +1,53 @@
-﻿@model IEnumerable<Supermercado.Models.Manga>
-
+﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Listar Mangas";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="javascript:void(0)" data-action="Create" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Novo Livro
+    </a>
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Genero.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tipo.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Titulo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Autor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ano)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Valor)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genero.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tipo.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Titulo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Autor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ano)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Valor)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+<table id="gridDados" class="table table-striped">
+    <thead>
+        <tr>
+            <th data-column-id="Titulo" data-order="asc">Título</th>
+            <th data-column-id="Autor">Autor</th>
+            <th data-column-id="Ano">Ano</th>
+            <th data-column-id="Valor" data-formatter="Dinheiro">Valor</th>
+            <th data-formatter="Acoes" data-sortable="false">Ações</th>
+        </tr>
+    </thead>
+</table>
+
+@section scripts{
+
+    <script src="~/Scripts/toastr.js"></script>
+    @Scripts.Render("~/bundles/jquerybootgrid")
+    <script src="~/Scripts/projeto/ControlarGrid.js"></script>
+
+    <script type="text/javascript">
+
+        numeral.language("pt-br");
+
+        var controller = "Mangas";
+
+        var urlListar = "@Url.Action("Listar")";
+
+        $(document).ready(configurarControles);
+
+    </script>
+
 }
 
-</table>
+@section estilos{
+
+    <link href="~/Content/jquery.bootgrid.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+}
+
+

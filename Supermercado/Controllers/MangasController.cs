@@ -8,60 +8,102 @@ using System.Web;
 using System.Web.Mvc;
 using Supermercado.AcessoDados;
 using Supermercado.Models;
+using System.Linq.Dynamic;
 
 namespace Supermercado.Controllers
 {
     public class MangasController : Controller
     {
-        private BancoContexto db = new BancoContexto();
+        private BancoContexto _db = new BancoContexto();
 
         // GET: Mangas
         public ActionResult Index()
         {
-            var mangas = db.Mangas.Include(m => m.Genero).Include(m => m.Tipo);
-            return View(mangas.ToList());
+            //var mangas = _db.Mangas.Include(m => m.Genero).Include(m => m.Tipo);
+            //return View(mangas.ToList());
+            return View();
         }
 
-        // GET: Mangas/Details/5
+        public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 5)
+        {
+            var chave = Request.Form.AllKeys.First(k => k.StartsWith("sort"));
+            var ordenacao = Request[chave];
+            var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
+            var mangas = _db.Mangas.Include(l => l.Genero);
+
+            var total = mangas.Count();
+
+            if (!string.IsNullOrWhiteSpace(searchPhrase))
+            {
+                int ano;
+                int.TryParse(searchPhrase, out ano);
+
+                decimal valor;
+                decimal.TryParse(searchPhrase, out valor);
+                mangas = mangas.Where("Titulo.Contains(@0) OR Autor.Contains(@0) OR Ano == @1 OR Valor = @2", searchPhrase, ano, valor);
+            }
+
+            string campoOrdenacao = $"{campo} {ordenacao}";
+
+            var mangasPaginados = mangas.OrderBy(campoOrdenacao).Skip((current - 1) * rowCount).Take(rowCount);
+
+            return Json(new
+            {
+                rows = mangasPaginados.ToList(),
+                current,
+                rowCount,
+                total
+            }
+            , JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Manga manga = db.Mangas.Find(id);
+
+            Manga manga = _db.Mangas.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
+            // manga = _db.Mangas.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
+
             if (manga == null)
             {
                 return HttpNotFound();
             }
-            return View(manga);
-        }
 
+            return PartialView(manga);
+        }
         // GET: Mangas/Create
         public ActionResult Create()
         {
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome");
-            ViewBag.TipoId = new SelectList(db.Tipos, "Id", "Nome");
-            return View();
+            ViewBag.GeneroId = new SelectList(_db.Generos, "Id", "Nome");
+            return PartialView();
         }
 
-        // POST: Mangas/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titulo,Autor,Ano,Descricao,Valor,GeneroId,TipoId")] Manga manga)
+        public JsonResult Create(Manga manga)
         {
+            var tipos = _db.Tipos.ToList();
+            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Manga"));
+            manga.Tipo = tipo;
+            manga.TipoId = tipo.Id;
             if (ModelState.IsValid)
             {
-                db.Mangas.Add(manga);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                _db.Mangas.Add(manga);
+                _db.SaveChanges();
+                return Json(new { resultado = true, message = "Manga cadastrado com sucesso" });
+            }
+            else
+            {
+                IEnumerable<ModelError> erros = ModelState.Values.SelectMany(item => item.Errors);
+
+                return Json(new { resultado = false, message = erros });
             }
 
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", manga.GeneroId);
-            ViewBag.TipoId = new SelectList(db.Tipos, "Id", "Nome", manga.TipoId);
-            return View(manga);
         }
 
         // GET: Mangas/Edit/5
@@ -71,14 +113,13 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Manga manga = db.Mangas.Find(id);
+            Manga manga = _db.Mangas.Find(id);
             if (manga == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", manga.GeneroId);
-            ViewBag.TipoId = new SelectList(db.Tipos, "Id", "Nome", manga.TipoId);
-            return View(manga);
+            ViewBag.GeneroId = new SelectList(_db.Generos, "Id", "Nome", manga.GeneroId);
+            return PartialView(manga);
         }
 
         // POST: Mangas/Edit/5
@@ -86,17 +127,25 @@ namespace Supermercado.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titulo,Autor,Ano,Descricao,Valor,GeneroId,TipoId")] Manga manga)
+        public JsonResult Edit(Manga manga)
         {
+            var tipos = _db.Tipos.ToList();
+            var tipo = tipos.Find(tipo1 => tipo1.Nome.Contains("Manga"));
+            manga.Tipo = tipo;
+            manga.TipoId = tipo.Id;
             if (ModelState.IsValid)
             {
-                db.Entry(manga).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                _db.Entry(manga).State = EntityState.Modified;
+                _db.SaveChanges();
+
+                return Json(new { resultado = true, message = "Manga editado com sucesso" });
             }
-            ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", manga.GeneroId);
-            ViewBag.TipoId = new SelectList(db.Tipos, "Id", "Nome", manga.TipoId);
-            return View(manga);
+            else
+            {
+                IEnumerable<ModelError> erros = ModelState.Values.SelectMany(item => item.Errors);
+
+                return Json(new { resultado = false, message = erros });
+            }
         }
 
         // GET: Mangas/Delete/5
@@ -106,30 +155,42 @@ namespace Supermercado.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Manga manga = db.Mangas.Find(id);
+            Manga manga = _db.Mangas.Find(id);
             if (manga == null)
             {
                 return HttpNotFound();
             }
-            return View(manga);
+            return PartialView(manga);
         }
 
         // POST: Mangas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public JsonResult DeleteConfirmed(int id)
         {
-            Manga manga = db.Mangas.Find(id);
-            db.Mangas.Remove(manga);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Manga manga = _db.Mangas.Find(id);
+
+                _db.Mangas.Remove(manga);
+
+                _db.SaveChanges();
+
+                return Json(new { resultado = true, message = "Manga excluído com sucesso" });
+            }
+            catch (Exception e)
+            {
+                return Json(new { resultado = false, message = e.Message });
+            }
+
+
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

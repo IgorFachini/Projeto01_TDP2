@@ -392,11 +392,6 @@
     <Content Include="Views\LojasFisicas\Details.cshtml" />
     <Content Include="Views\LojasFisicas\Edit.cshtml" />
     <Content Include="Views\LojasFisicas\Index.cshtml" />
-    <Content Include="Views\ActionFigures\Create.cshtml" />
-    <Content Include="Views\ActionFigures\Delete.cshtml" />
-    <Content Include="Views\ActionFigures\Details.cshtml" />
-    <Content Include="Views\ActionFigures\Edit.cshtml" />
-    <Content Include="Views\ActionFigures\Index.cshtml" />
     <Content Include="Views\Mangas\Create.cshtml" />
     <Content Include="Views\Mangas\Delete.cshtml" />
     <Content Include="Views\Mangas\Details.cshtml" />
@@ -404,6 +399,11 @@
     <Content Include="Views\Mangas\Index.cshtml" />
     <Content Include="Views\WebMail\Index.cshtml" />
     <Content Include="Views\WebMail\SendEmailView.cshtml" />
+    <Content Include="Views\ActionFigures\Create.cshtml" />
+    <Content Include="Views\ActionFigures\Delete.cshtml" />
+    <Content Include="Views\ActionFigures\Details.cshtml" />
+    <Content Include="Views\ActionFigures\Edit.cshtml" />
+    <Content Include="Views\ActionFigures\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

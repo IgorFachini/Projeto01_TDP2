@@ -24,6 +24,8 @@ namespace Supermercado.AcessoDados
             {
                 new Tipo() {Nome = "Livro" },
                 new Tipo() {Nome = "Game" },
+                new Tipo() {Nome = "Manga" },
+                new Tipo() {Nome = "ActionFigure"},
                 new Tipo() {Nome = "Filme" }
             };
 
@@ -37,6 +39,8 @@ namespace Supermercado.AcessoDados
                 new Genero() { Nome = "Nacional" },
                 new Genero() { Nome = "Religião" },
                 new Genero() { Nome = "RPG" },
+                new Genero() { Nome = "Hentai" },
+                new Genero() { Nome = "Ficção" },
             };
 
             generos.ForEach(g => contexto.Generos.Add(g));
@@ -96,6 +100,38 @@ namespace Supermercado.AcessoDados
             };
 
             filmes.ForEach(l => contexto.Filmes.Add(l));
+
+            List<Manga> mangas = new List<Manga>()
+            {
+                new Manga()
+                {
+                    Titulo = "High School DXD",
+                    Descricao = "Ator principal ganha poderes ao tocar peito da mestra",
+                    Autor = "Mr m",
+                    Ano = 2002,
+                    Valor = 30.00m,
+                    Genero = generos.FirstOrDefault(g => g.Nome == "Hentai"),
+                    Tipo = tipos.FirstOrDefault(t => t.Nome == "Manga")
+                }
+            };
+
+            mangas.ForEach(l => contexto.Mangas.Add(l));
+
+            List<ActionFigure> actionFigures = new List<ActionFigure>()
+            {
+                new ActionFigure()
+                {
+                    Figura = "Little Groot - Guardians of The Galaxy ",
+                    Fabricante = "Hot Toys",
+                    Descricao = "Action figure do personagem Groot interpretado por Vin Diesel no filme Guardiões da Galáxia",
+                    Valor = 300.00m,
+                    Genero = generos.FirstOrDefault(g => g.Nome == "Ficção"),
+                    Tipo = tipos.FirstOrDefault(t => t.Nome == "ActionFigure")
+
+                }
+            };
+
+            actionFigures.ForEach(l => contexto.ActionFigures.Add(l));
 
             contexto.SaveChanges();
         }

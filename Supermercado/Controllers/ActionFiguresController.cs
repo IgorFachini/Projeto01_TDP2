@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -16,20 +17,20 @@ namespace Supermercado.Controllers
         private BancoContexto db = new BancoContexto();
 
         // GET: ActionFigures
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var actionFigures = db.ActionFigures.Include(a => a.Genero).Include(a => a.Tipo);
-            return View(actionFigures.ToList());
+            return View(await actionFigures.ToListAsync());
         }
 
         // GET: ActionFigures/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActionFigure actionFigure = db.ActionFigures.Find(id);
+            ActionFigure actionFigure = await db.ActionFigures.FindAsync(id);
             if (actionFigure == null)
             {
                 return HttpNotFound();
@@ -50,12 +51,12 @@ namespace Supermercado.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Figura,Fabricante,Descricao,Valor,GeneroId,TipoId")] ActionFigure actionFigure)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Figura,Fabricante,Descricao,Valor,GeneroId,TipoId")] ActionFigure actionFigure)
         {
             if (ModelState.IsValid)
             {
                 db.ActionFigures.Add(actionFigure);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -65,13 +66,13 @@ namespace Supermercado.Controllers
         }
 
         // GET: ActionFigures/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActionFigure actionFigure = db.ActionFigures.Find(id);
+            ActionFigure actionFigure = await db.ActionFigures.FindAsync(id);
             if (actionFigure == null)
             {
                 return HttpNotFound();
@@ -86,12 +87,12 @@ namespace Supermercado.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Figura,Fabricante,Descricao,Valor,GeneroId,TipoId")] ActionFigure actionFigure)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Figura,Fabricante,Descricao,Valor,GeneroId,TipoId")] ActionFigure actionFigure)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(actionFigure).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             ViewBag.GeneroId = new SelectList(db.Generos, "Id", "Nome", actionFigure.GeneroId);
@@ -100,13 +101,13 @@ namespace Supermercado.Controllers
         }
 
         // GET: ActionFigures/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActionFigure actionFigure = db.ActionFigures.Find(id);
+            ActionFigure actionFigure = await db.ActionFigures.FindAsync(id);
             if (actionFigure == null)
             {
                 return HttpNotFound();
@@ -117,11 +118,11 @@ namespace Supermercado.Controllers
         // POST: ActionFigures/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            ActionFigure actionFigure = db.ActionFigures.Find(id);
+            ActionFigure actionFigure = await db.ActionFigures.FindAsync(id);
             db.ActionFigures.Remove(actionFigure);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

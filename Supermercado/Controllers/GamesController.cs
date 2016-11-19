@@ -64,7 +64,7 @@ namespace Supermercado.Controllers
             }
 
             Game game = _db.Games.Include(l => l.Genero).FirstOrDefault(l => l.Id == id.Value);
-            // game = db.Games.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
+            // game = _db.Games.Include(l => l.Tipo).FirstOrDefault(l => l.Id == id.Value);
 
             if (game == null)
             {
