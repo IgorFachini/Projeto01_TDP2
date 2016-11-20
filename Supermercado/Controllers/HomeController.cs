@@ -17,13 +17,13 @@ namespace Supermercado.Controllers {
 
         public ActionResult Ingles() {
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
-            return View("About");
+            return View("Index");
 
         }
 
         public ActionResult Portugues() {
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pt-br");
-            return View("About");
+            return View("Index");
         }
 
         public ActionResult ListarPorGenero(int id)

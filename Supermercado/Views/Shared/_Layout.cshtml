@@ -1,4 +1,5 @@
 ﻿s<!DOCTYPE html>
+@using Resources
 <html>
 <head>
     <meta charset="utf-8" />
@@ -13,29 +14,39 @@
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")">Livraria</a>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">@Resources.Site.NomeLoja</a>
             </div>
             <ul class="nav navbar-nav">
                
                           
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrativo <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Resources.Site.Admin<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Livros", "Index", "Livros")</li>
-                        <li>@Html.ActionLink("Games", "Index", "Games")</li>
-                        <li>@Html.ActionLink("Filmes", "Index", "Filmes")</li>
-                        <li>@Html.ActionLink("ActionFigures", "Index", "ActionFigures")</li>
-                        <li>@Html.ActionLink("Mangas", "Index", "Mangas")</li>
+                        <li>@Html.ActionLink(@Resources.Site.Livros, "Index", "Livros")</li>
+                        <li>@Html.ActionLink(@Resources.Site.Jogos, "Index", "Games")</li>
+                        <li>@Html.ActionLink(@Resources.Site.Filmes, "Index", "Filmes")</li>
+                        <li>@Html.ActionLink(@Resources.Site.Figuras, "Index", "ActionFigures")</li>
+                        <li>@Html.ActionLink(@Resources.Site.Mangas, "Index", "Mangas")</li>
                         <li role="separator" class="divider"></li>
-                        <li>@Html.ActionLink("Gêneros", "Index", "Generos")</li>
-                        <li>@Html.ActionLink("LojasFisicas", "Index", "LojasFisicas")</li>
+                        <li>@Html.ActionLink(@Resources.Site.Generos, "Index", "Generos")</li>
+                        <li>@Html.ActionLink(@Resources.Site.Lojas, "Index", "LojasFisicas")</li>
                     </ul>
                 </li>
                   
                
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("WebMail", "Index", "WebMail")</li>
-            </ul>
+                <li>@Html.ActionLink(@Resources.Site.About, "About", "Home")</li>
+                <li>@Html.ActionLink(@Resources.Site.WebMail, "Index", "WebMail")</li>
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Resources.Site.Idioma<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="~/Home/Ingles">@Resources.Site.IN</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="~/Home/Portugues">@Resources.Site.PT</a></li>
+                    </ul>
+                </li>
+</ul>
             @Html.Partial("_LoginPartial")
         </div>
     </div>

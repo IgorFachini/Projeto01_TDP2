@@ -268,11 +268,13 @@
     <Content Include="images\-590246944_00000.jpg" />
     <Content Include="images\banner.jpg" />
     <Content Include="images\banner2.jpg" />
+    <Content Include="images\MODEM.jpg" />
     <Content Include="images\pic01.jpg" />
     <Content Include="images\pic02.jpg" />
     <Content Include="images\pic03.jpg" />
     <Content Include="images\pic04.jpg" />
     <Content Include="images\pic05.jpg" />
+    <Content Include="images\PLACA DE SOM.jpg" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
