@@ -199,9 +199,9 @@
     <Compile Include="AcessoDados\BancoContexto.cs" />
     <Compile Include="AcessoDados\Inicializador.cs" />
     <Compile Include="App_GlobalResources\Site.designer.cs">
-      <DependentUpon>Site.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Site.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Site.en-US.designer.cs">
       <DependentUpon>Site.en-US.resx</DependentUpon>
@@ -268,13 +268,11 @@
     <Content Include="images\-590246944_00000.jpg" />
     <Content Include="images\banner.jpg" />
     <Content Include="images\banner2.jpg" />
-    <Content Include="images\MODEM.jpg" />
     <Content Include="images\pic01.jpg" />
     <Content Include="images\pic02.jpg" />
     <Content Include="images\pic03.jpg" />
     <Content Include="images\pic04.jpg" />
     <Content Include="images\pic05.jpg" />
-    <Content Include="images\PLACA DE SOM.jpg" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -426,8 +424,8 @@
   <ItemGroup>
     <Content Include="App_GlobalResources\Site.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Site.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Site.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>
