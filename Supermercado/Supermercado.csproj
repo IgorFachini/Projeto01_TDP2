@@ -93,6 +93,8 @@
       <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -220,6 +222,7 @@
     <Compile Include="Controllers\GenerosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LivrosController.cs" />
+    <Compile Include="Controllers\LojaFisicasController.cs" />
     <Compile Include="Controllers\LojasFisicasController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MangasController.cs" />
@@ -238,9 +241,26 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Livro.cs" />
     <Compile Include="Models\ConteudoPorGenero.cs" />
-    <Compile Include="Models\LojaFisica.cs" />
+    <Compile Include="Models\LojaFisica.cs">
+      <DependentUpon>Modelos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Manga.cs" />
+    <Compile Include="Models\Modelos.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modelos.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Modelos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modelos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Modelos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modelos.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tipo.cs" />
     <Compile Include="Models\WebMail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -273,6 +293,16 @@
     <Content Include="images\pic03.jpg" />
     <Content Include="images\pic04.jpg" />
     <Content Include="images\pic05.jpg" />
+    <Content Include="Models\Modelos.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Modelos.edmx</DependentUpon>
+      <LastGenOutput>Modelos.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Modelos.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Modelos.edmx</DependentUpon>
+      <LastGenOutput>Modelos.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -290,6 +320,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\Modelos.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Modelos.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Modelos.edmx.diagram">
+      <DependentUpon>Modelos.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -404,6 +441,11 @@
     <Content Include="Views\ActionFigures\Details.cshtml" />
     <Content Include="Views\ActionFigures\Edit.cshtml" />
     <Content Include="Views\ActionFigures\Index.cshtml" />
+    <Content Include="Views\LojaFisicas\Create.cshtml" />
+    <Content Include="Views\LojaFisicas\Delete.cshtml" />
+    <Content Include="Views\LojaFisicas\Details.cshtml" />
+    <Content Include="Views\LojaFisicas\Edit.cshtml" />
+    <Content Include="Views\LojaFisicas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -427,6 +469,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Site.designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
