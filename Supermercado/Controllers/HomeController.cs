@@ -26,6 +26,18 @@ namespace Supermercado.Controllers {
             return View("Index");
         }
 
+
+        public ActionResult InglesAbout() {
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
+            return View("About");
+
+        }
+
+        public ActionResult PortuguesAbout() {
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pt-br");
+            return View("About");
+        }
+
         public ActionResult ListarPorGenero(int id)
         {
 
